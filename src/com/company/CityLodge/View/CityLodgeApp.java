@@ -1,21 +1,18 @@
 package com.company.CityLodge.View;
 
 import com.company.CityLodge.Controller.Controller;
+import com.company.CityLodge.Controller.InputHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 import com.company.CityLodge.Model.*;
 
 import java.io.File;

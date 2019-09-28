@@ -85,6 +85,23 @@ public class JavaDatabase {
         return list;
     }
 
+    public void  addImage(String roomId,String imageName)
+    {
+        String sql = "update ROOM set IMAGENAME = ? where ROOMID like ?";
+        try {
+            pres = conn.prepareStatement(sql);
+            pres.setObject(1, imageName);
+            pres.setObject(2, roomId);
+            pres.executeUpdate();
+            conn.commit();
+            if (pres != null) {
+                pres.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String imageName(String roomId)
     {
         String imageName = null;

@@ -10,7 +10,7 @@ public abstract class Room implements Serializable{
 
     private String roomId;
     private String feature;
-    protected int states;
+    private int states;
     // For states, we have 1 for Available, 0 for Rented and -1 for Maintenance
     private ArrayList<HiringRecord> allRecord;
     private HiringRecord tempRecord;
@@ -20,6 +20,20 @@ public abstract class Room implements Serializable{
     private DateTime nextMaintenanceDate;
     private DateTime maintenanceDate;
     private static long serialVersionUID = 20190926L;
+
+    public String exportRecord()
+    {
+        String s = "";
+        if(tempRecord.getRecordStage()!=0)
+        {
+            s=s+tempRecord.toString()+"\n";
+        }
+        for(int i = numOfRecord-1;i>=0;i--)
+        {
+            s=s+allRecord.get(i).toString()+"\n";
+        }
+        return s;
+    }
 
     public int getPrice(int numOfBed)
     {
@@ -55,6 +69,32 @@ public abstract class Room implements Serializable{
         String basicDetail = "Room ID: \t\t\t" + roomId + "\n" + "Number of bedrooms:\t" + numOfBed + "\n" + "Type:\t\t\t\t"
                 + roomType + "\n" + "Feature summary:\t" + feature + "\n";
         tempRecord = new HiringRecord(basicDetail);
+    }
+
+    public void loadRecord(ArrayList<HiringRecord> list) {
+        String basicDetail = "Room ID: \t\t\t" + roomId + "\n" + "Number of bedrooms:\t" + numOfBed + "\n" + "Type:\t\t\t\t"
+                + roomType + "\n" + "Feature summary:\t" + feature + "\n";
+        int i;
+        for( i=0;i<list.size()-1;i++)
+        {
+            try {
+                HiringRecord temp = (HiringRecord) list.get(i).clone();
+                temp.setBasicDetail(basicDetail);
+                addRecord(temp);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+        try {
+            HiringRecord temp = (HiringRecord) list.get(i).clone();
+            temp.setBasicDetail(basicDetail);
+            tempRecord=temp;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void addRecord(HiringRecord newRecord) {
@@ -202,5 +242,28 @@ public abstract class Room implements Serializable{
 
     public void setMaintenanceDate(DateTime maintenanceDate) {
         this.maintenanceDate = maintenanceDate;
+    }
+
+    @Override
+    public String toString() {
+        String state = null;
+        if(states==1)
+        {
+            state="Available";
+        }
+        if(states==0)
+        {
+            state="Rented";
+        }
+        if(states==-1)
+        {
+            state="Maintenance";
+        }
+        String s = roomId + ":"  +numOfBed + ":"  +roomType+ ":"  +state;
+        return s;
+    }
+
+    public DateTime getMaintenanceDate() {
+        return maintenanceDate;
     }
 }

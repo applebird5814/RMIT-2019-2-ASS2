@@ -31,8 +31,8 @@ public class AddSuiteHandler implements EventHandler<ActionEvent> {
                 String feature = textField2.getText();
                 DateTime temp = Controller.strToDate(textField3);
                 Suite suite = new Suite(roomId,feature,temp);
-                controller.getHotel().addRoom(suite);
                 controller.getDatabase().saveRoom(suite);
+                controller.getHotel().addRoom(suite);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(roomId + "is now add successfully.");
                 alert.show();

@@ -30,8 +30,8 @@ public class AddStandardHandler implements EventHandler<ActionEvent> {
             if(checkLength)
             {
                 StandardRoom standardRoom = new StandardRoom("R_" + textField1.getText(),textField2.getText(),Integer.parseInt(textField3.getText()));
-                controller.getHotel().addRoom(standardRoom);
                 controller.getDatabase().saveRoom(standardRoom);
+                controller.getHotel().addRoom(standardRoom);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("R_" + textField1.getText()+"is now add successfully.");
                 alert.show();

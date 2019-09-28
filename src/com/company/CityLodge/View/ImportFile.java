@@ -1,6 +1,7 @@
 package com.company.CityLodge.View;
 
 
+import com.company.CityLodge.Controller.InputHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,30 +21,7 @@ public class ImportFile {
     public ImportFile()
     {
         Button importFile = new Button("Click here to add file");
-        importFile.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FileChooser fc = new FileChooser();
-                fc.setTitle("Choose a txt file");
-                fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text","*.txt"));
-
-                File file = fc.showOpenDialog(stage);
-                // Here if do not choose a file， it will be a null file
-                try {
-                    FileReader fr = new FileReader(file);
-                    BufferedReader br = new BufferedReader(fr);
-                    String str = null;
-                    while ((str = br.readLine()) != null) {
-
-                    }
-                    br.close();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
+        importFile.setOnAction(new InputHandler(stage));
 
         Button mainPage = new Button(" Back ");
         mainPage.setOnAction(new EventHandler<ActionEvent>() {
