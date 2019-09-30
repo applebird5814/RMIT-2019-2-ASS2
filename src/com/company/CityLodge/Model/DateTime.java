@@ -1,9 +1,9 @@
 package com.company.CityLodge.Model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.sql.Date;
 
 public class DateTime implements Serializable {
 
@@ -28,6 +28,24 @@ public class DateTime implements Serializable {
         setDate(day, month, year);
     }
 
+    public static String getCurrentTime() {
+        Date date = new Date(System.currentTimeMillis()); // returns current Date/Time
+        return date.toString();
+    }
+
+    // returns difference in days
+    public static int diffDays(DateTime endDate, DateTime startDate) {
+        final long HOURS_IN_DAY = 24L;
+        final int MINUTES_IN_HOUR = 60;
+        final int SECONDS_IN_MINUTES = 60;
+        final int MILLISECONDS_IN_SECOND = 1000;
+        long convertToDays = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTES * MILLISECONDS_IN_SECOND;
+        long hirePeriod = endDate.getTime() - startDate.getTime();
+        double difference = (double) hirePeriod / (double) convertToDays;
+        int round = (int) Math.round(difference);
+        return round;
+    }
+
     public long getTime() {
         return time;
     }
@@ -40,11 +58,6 @@ public class DateTime implements Serializable {
 
     public String toString() {
         return getFormattedDate();
-    }
-
-    public static String getCurrentTime() {
-        Date date = new Date(System.currentTimeMillis()); // returns current Date/Time
-        return date.toString();
     }
 
     public String getFormattedDate() {
@@ -61,19 +74,6 @@ public class DateTime implements Serializable {
         Date gct = new Date(currentTime);
 
         return sdf.format(gct);
-    }
-
-    // returns difference in days
-    public static int diffDays(DateTime endDate, DateTime startDate) {
-        final long HOURS_IN_DAY = 24L;
-        final int MINUTES_IN_HOUR = 60;
-        final int SECONDS_IN_MINUTES = 60;
-        final int MILLISECONDS_IN_SECOND = 1000;
-        long convertToDays = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTES * MILLISECONDS_IN_SECOND;
-        long hirePeriod = endDate.getTime() - startDate.getTime();
-        double difference = (double) hirePeriod / (double) convertToDays;
-        int round = (int) Math.round(difference);
-        return round;
     }
 
     private void setDate(int day, int month, int year) {

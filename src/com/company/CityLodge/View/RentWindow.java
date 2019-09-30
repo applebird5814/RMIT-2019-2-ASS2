@@ -19,8 +19,7 @@ import java.util.function.UnaryOperator;
 public class RentWindow {
     private final Stage stage = new Stage();
 
-    public RentWindow(Room room)
-    {
+    public RentWindow(Room room) {
         Label lable2 = new Label("Customer ID");
         TextField textArea2 = new TextField("CUS_001");
 
@@ -29,8 +28,7 @@ public class RentWindow {
         textArea3.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
             @Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}"))
-                {
+                if (change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}")) {
                     return change;
                 }
                 return null;
@@ -42,8 +40,7 @@ public class RentWindow {
         textArea4.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
             @Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getControlNewText().matches("[0-9]{0,2}"))
-                {
+                if (change.getControlNewText().matches("[0-9]{0,2}")) {
                     return change;
                 }
                 return null;
@@ -52,7 +49,7 @@ public class RentWindow {
 
         Button submit = new Button("Submit");
         Controller controller = CityLodgeApp.getController();
-        RentHandler rentHandler = new RentHandler(controller.getHotel().findRoom(room.getRoomId()),textArea2,textArea3,textArea4);
+        RentHandler rentHandler = new RentHandler(controller.getHotel().findRoom(room.getRoomId()), textArea2, textArea3, textArea4);
         submit.setOnAction(rentHandler);
 
         Button mainPage = new Button(" Back ");
@@ -67,14 +64,14 @@ public class RentWindow {
         });
 
         GridPane grid = new GridPane();
-        grid.add(lable2,0,1);
-        grid.add(textArea2,2,1);
-        grid.add(lable3,0,2);
-        grid.add(textArea3,2,2);
-        grid.add(lable4,0,3);
-        grid.add(textArea4,2,3);
-        grid.add(submit,1,4);
-        grid.add(mainPage,1,5);
+        grid.add(lable2, 0, 1);
+        grid.add(textArea2, 2, 1);
+        grid.add(lable3, 0, 2);
+        grid.add(textArea3, 2, 2);
+        grid.add(lable4, 0, 3);
+        grid.add(textArea4, 2, 3);
+        grid.add(submit, 1, 4);
+        grid.add(mainPage, 1, 5);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);

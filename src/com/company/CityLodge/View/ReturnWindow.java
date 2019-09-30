@@ -1,7 +1,6 @@
 package com.company.CityLodge.View;
 
 import com.company.CityLodge.Controller.Controller;
-import com.company.CityLodge.Controller.RentHandler;
 import com.company.CityLodge.Controller.ReturnHandler;
 import com.company.CityLodge.Model.Room;
 import javafx.event.ActionEvent;
@@ -20,15 +19,13 @@ import java.util.function.UnaryOperator;
 public class ReturnWindow {
     private final Stage stage = new Stage();
 
-    public ReturnWindow(Room room)
-    {
+    public ReturnWindow(Room room) {
         Label lable3 = new Label("Return Date");
         TextField textArea3 = new TextField("2019-09-27");
         textArea3.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
             @Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}"))
-                {
+                if (change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}")) {
                     return change;
                 }
                 return null;
@@ -37,7 +34,7 @@ public class ReturnWindow {
 
         Button submit = new Button("Submit");
         Controller controller = CityLodgeApp.getController();
-        ReturnHandler returnHandler = new ReturnHandler(controller.getHotel().findRoom(room.getRoomId()),textArea3);
+        ReturnHandler returnHandler = new ReturnHandler(controller.getHotel().findRoom(room.getRoomId()), textArea3);
         submit.setOnAction(returnHandler);
 
         Button mainPage = new Button(" Back ");
@@ -52,10 +49,10 @@ public class ReturnWindow {
         });
 
         GridPane grid = new GridPane();
-        grid.add(lable3,0,2);
-        grid.add(textArea3,2,2);
-        grid.add(submit,1,4);
-        grid.add(mainPage,1,5);
+        grid.add(lable3, 0, 2);
+        grid.add(textArea3, 2, 2);
+        grid.add(submit, 1, 4);
+        grid.add(mainPage, 1, 5);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);

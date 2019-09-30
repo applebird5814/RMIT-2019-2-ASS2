@@ -1,4 +1,3 @@
-
 package com.company.CityLodge.View;
 
 import com.company.CityLodge.Controller.ExportHandler;
@@ -14,7 +13,8 @@ import javafx.stage.Stage;
 public class ExportFile {
 
     private final Stage stage = new Stage();
-    public ExportFile(){
+
+    public ExportFile() {
         Button exportFile = new Button("Click here to export data");
         exportFile.setOnAction(new ExportHandler(stage));
 
@@ -31,8 +31,8 @@ public class ExportFile {
         });
 
         GridPane grid = new GridPane();
-        grid.add(exportFile,0,0);
-        grid.add(mainPage,0,1);
+        grid.add(exportFile, 0, 0);
+        grid.add(mainPage, 0, 1);
         grid.setAlignment(Pos.CENTER);
         Scene scene = new Scene(grid);
         stage.setScene(scene);

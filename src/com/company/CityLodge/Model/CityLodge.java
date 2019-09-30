@@ -2,31 +2,40 @@ package com.company.CityLodge.Model;
 
 import com.company.CityLodge.JavaDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import java.io.Serializable;
-
-public class CityLodge implements Serializable{
+public class CityLodge implements Serializable {
     private ArrayList<Room> allRooms;
     private int numOfRooms;
 
-    public void loadData(ArrayList<Room> room)
+    public CityLodge() {
+        allRooms = new ArrayList<Room>();
+    }
+
+    public void textMaintainCheck()
     {
-        for(int i=0;i<room.size();i++)
+        for(int i=0;i<allRooms.size();i++)
         {
-            allRooms.add(i,room.get(i));
-            numOfRooms++;
+            allRooms.get(i).checkMaintain();
         }
     }
 
-    public void updateData()
-    {
-        JavaDatabase javaDatabase = new JavaDatabase();
-        javaDatabase.updateRoom(allRooms);
+    public void loadData(ArrayList<Room> room) {
+        for (int i = 0; i < room.size(); i++) {
+            try {
+                room.get(i).checkMaintain();
+                allRooms.add(i, (Room) room.get(i).clone());
+                numOfRooms++;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public CityLodge() {
-        allRooms = new ArrayList<Room>();
+    public void updateData() {
+        JavaDatabase javaDatabase = new JavaDatabase();
+        javaDatabase.updateRoom(allRooms);
     }
 
     public void addRoom(Room newRoom) {
@@ -49,8 +58,7 @@ public class CityLodge implements Serializable{
         return allRooms.get(index);
     }
 
-    public int getNumOfRooms()
-    {
+    public int getNumOfRooms() {
         return numOfRooms;
     }
 

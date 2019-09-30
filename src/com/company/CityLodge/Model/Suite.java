@@ -13,21 +13,16 @@ public class Suite extends Room {
 
     @Override
     public String toString() {
-        String s = super.toString()+":"  +super.getMaintenanceDate().toString()+ ":"  +super.getFeature();
-        try{
+        String s = super.toString() + ":" + super.getMaintenanceDate().toString() + ":" + super.getFeature();
+        try {
             JavaDatabase javaDatabase = new JavaDatabase();
             String name = javaDatabase.imageName(super.getRoomId());
-            if(name.equals("No_image.png"))
-            {
+            if (name.equals("No_image.png")) {
                 return s;
+            } else {
+                s = s + ":" + name;
             }
-            else
-            {
-                s=s+":"+name;
-            }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
         return s;

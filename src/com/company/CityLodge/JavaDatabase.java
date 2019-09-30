@@ -1,14 +1,14 @@
 package com.company.CityLodge;
 
+import com.company.CityLodge.Model.Room;
+
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.company.CityLodge.Model.*;
-
 public class JavaDatabase {
     private static Connection conn;
-    private PreparedStatement pres;
+
     static {
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -21,6 +21,8 @@ public class JavaDatabase {
             e.printStackTrace();
         }
     }
+
+    private PreparedStatement pres;
 
     public void updateRoom(ArrayList<Room> RoomList) {
         String sql = "update ROOM set OBJECT = ? where ROOMID like ?";
@@ -42,7 +44,7 @@ public class JavaDatabase {
         }
     }
 
-    public void saveRoom(Room room) throws Exception{
+    public void saveRoom(Room room) throws Exception {
         String sql = "insert into ROOM(roomid, object) values(?,?)";
 
         pres = conn.prepareStatement(sql);
@@ -85,8 +87,7 @@ public class JavaDatabase {
         return list;
     }
 
-    public void  addImage(String roomId,String imageName)
-    {
+    public void addImage(String roomId, String imageName) {
         String sql = "update ROOM set IMAGENAME = ? where ROOMID like ?";
         try {
             pres = conn.prepareStatement(sql);
@@ -102,32 +103,27 @@ public class JavaDatabase {
         }
     }
 
-    public String imageName(String roomId)
-    {
+    public String imageName(String roomId) {
         String imageName = null;
         String sql = "select room.imageName from room where room.roomid like ?";
-        try{
+        try {
             pres = conn.prepareStatement(sql);
             pres.setObject(1, roomId);
             ResultSet res = pres.executeQuery();
-            while(res.next())
-            {
-                imageName=res.getString("imageName");
+            while (res.next()) {
+                imageName = res.getString("imageName");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-         catch (SQLException e) {
-             e.printStackTrace();
-         }
-        if(imageName==null)
-        {
-            imageName="No_image.png";
+        if (imageName == null) {
+            imageName = "No_image.png";
         }
         return imageName;
     }
 
-    public byte[] roomToBlob(Object object)
-    {
-        try{
+    public byte[] roomToBlob(Object object) {
+        try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             ObjectOutputStream outputStream = new ObjectOutputStream(out);
             outputStream.writeObject(object);
@@ -135,9 +131,7 @@ public class JavaDatabase {
             outputStream.close();
             out.close();
             return bytes;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

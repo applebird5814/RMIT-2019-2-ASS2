@@ -4,22 +4,16 @@ package com.company.CityLodge.View;
 import com.company.CityLodge.Controller.InputHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.geometry.Pos;
-
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 
 public class ImportFile {
     private final Stage stage = new Stage();
-    public ImportFile()
-    {
+
+    public ImportFile() {
         Button importFile = new Button("Click here to add file");
         importFile.setOnAction(new InputHandler(stage));
 
@@ -36,8 +30,8 @@ public class ImportFile {
         });
 
         GridPane grid = new GridPane();
-        grid.add(importFile,0,0);
-        grid.add(mainPage,0,1);
+        grid.add(importFile, 0, 0);
+        grid.add(mainPage, 0, 1);
         grid.setAlignment(Pos.CENTER);
         Scene scene = new Scene(grid);
 

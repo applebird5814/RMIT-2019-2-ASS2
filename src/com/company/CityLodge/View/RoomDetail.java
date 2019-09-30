@@ -1,29 +1,32 @@
 package com.company.CityLodge.View;
 
 import com.company.CityLodge.JavaDatabase;
+import com.company.CityLodge.Model.Room;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.company.CityLodge.Model.*;
+
 import java.io.File;
 
 public class RoomDetail {
     private final Stage stage = new Stage();
-    public RoomDetail(Room room)
-    {
+
+    public RoomDetail(Room room) {
         JavaDatabase database = new JavaDatabase();
 
         //Image(Large)
         String tempStr;
-        tempStr = "images/"+database.imageName(room.getRoomId());
+        tempStr = "images/" + database.imageName(room.getRoomId());
         File file = new File(tempStr);
         Image image = new Image(file.toURI().toString());
         ImageView imageView = new ImageView(image);
@@ -34,7 +37,7 @@ public class RoomDetail {
         Text record = new Text(room.showAllRecord());
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefSize(250,200);
+        scrollPane.setPrefSize(250, 200);
         scrollPane.setContent(record);
 
         //Buttons
@@ -44,12 +47,10 @@ public class RoomDetail {
         rent.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(room.getStates()==1) {
+                if (room.getStates() == 1) {
                     stage.close();
                     RentWindow rentWindow = new RentWindow(room);
-                }
-                else
-                {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("This room is not Available for rent");
                     alert.show();
@@ -62,12 +63,10 @@ public class RoomDetail {
         returnRoom.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(room.getStates()==0) {
+                if (room.getStates() == 0) {
                     stage.close();
                     ReturnWindow returnWindow = new ReturnWindow(room);
-                }
-                else
-                {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("This room is not rented.");
                     alert.show();
@@ -80,12 +79,10 @@ public class RoomDetail {
         maintenance.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(room.getStates()==1) {
+                if (room.getStates() == 1) {
                     stage.close();
                     Maintain maintain = new Maintain(room);
-                }
-                else
-                {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("This room is not Available for maintenance");
                     alert.show();
@@ -98,12 +95,10 @@ public class RoomDetail {
         completeMain.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(room.getStates()==-1) {
+                if (room.getStates() == -1) {
                     stage.close();
                     CompleteMaintain completeMaintain = new CompleteMaintain(room);
-                }
-                else
-                {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("This room is not being maintenance");
                     alert.show();
@@ -124,20 +119,20 @@ public class RoomDetail {
         });
 
         VBox vBox = new VBox();
-        vBox.setPrefSize(150,200);
+        vBox.setPrefSize(150, 200);
         vBox.setSpacing(20.0);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(rent,returnRoom,maintenance,completeMain,back);
+        vBox.getChildren().addAll(rent, returnRoom, maintenance, completeMain, back);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.add(imageView,0,0);
-        grid.add(scrollPane,1,0);
-        grid.add(vBox,2,0);
+        grid.add(imageView, 0, 0);
+        grid.add(scrollPane, 1, 0);
+        grid.add(vBox, 2, 0);
 
         Scene scene = new Scene(grid);
         stage.setScene(scene);
-        stage.setTitle("Room "+room.getRoomId()+" Detail");
+        stage.setTitle("Room " + room.getRoomId() + " Detail");
         stage.setWidth(800);
         stage.setHeight(400);
         stage.show();

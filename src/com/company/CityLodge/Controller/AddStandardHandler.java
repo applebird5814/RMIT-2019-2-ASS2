@@ -7,8 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-import java.sql.SQLException;
-
 
 public class AddStandardHandler implements EventHandler<ActionEvent> {
 
@@ -26,25 +24,20 @@ public class AddStandardHandler implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         try {
             Controller controller = CityLodgeApp.getController();
-            Boolean checkLength = (textField1.getText().length()==3)&&(textField3.getText().length()==1);
-            if(checkLength)
-            {
-                StandardRoom standardRoom = new StandardRoom("R_" + textField1.getText(),textField2.getText(),Integer.parseInt(textField3.getText()));
+            Boolean checkLength = (textField1.getText().length() == 3) && (textField3.getText().length() == 1);
+            if (checkLength) {
+                StandardRoom standardRoom = new StandardRoom("R_" + textField1.getText(), textField2.getText(), Integer.parseInt(textField3.getText()));
                 controller.getDatabase().saveRoom(standardRoom);
                 controller.getHotel().addRoom(standardRoom);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("R_" + textField1.getText()+"is now add successfully.");
+                alert.setContentText("R_" + textField1.getText() + "is now add successfully.");
                 alert.show();
-            }
-            else
-            {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please check your input, Room Number should be XXX, Bedrooms should not be empty.");
                 alert.show();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Room already exists.");
             alert.show();

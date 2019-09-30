@@ -20,7 +20,7 @@ public class MaintainHandler implements EventHandler<ActionEvent> {
         controller.getHotel().getRoom(index).performMaintenance();
         controller.getHotel().updateData();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(controller.getHotel().getRoom(index).getRoomId()+ " is now being Maintenance");
+        alert.setContentText(controller.getHotel().getRoom(index).getRoomId() + " is now being Maintenance");
         alert.show();
 
     }

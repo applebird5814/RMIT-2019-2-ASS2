@@ -1,7 +1,7 @@
 package com.company.CityLodge.View;
 
 import com.company.CityLodge.Controller.Controller;
-import com.company.CityLodge.Controller.InputHandler;
+import com.company.CityLodge.Model.Room;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.company.CityLodge.Model.*;
 
 import java.io.File;
 
@@ -51,7 +50,7 @@ public class CityLodgeApp extends Application {
         });
 
         Menu addRoom = new Menu("Adding new room");
-        addRoom.getItems().addAll(addStandard,addSuite);
+        addRoom.getItems().addAll(addStandard, addSuite);
 
         MenuItem importFile = new MenuItem("Click here to import a txt file");
         importFile.setOnAction(new EventHandler<ActionEvent>() {
@@ -89,16 +88,16 @@ public class CityLodgeApp extends Application {
         quit.getItems().addAll(quitProgram);
 
         MenuBar menubar = new MenuBar();
-        menubar.getMenus().addAll(addRoom,indata,exdata,quit);
+        menubar.getMenus().addAll(addRoom, indata, exdata, quit);
 
-        int numOfRooms =controller.getHotel().getNumOfRooms();
+        int numOfRooms = controller.getHotel().getNumOfRooms();
 
         VBox vBox = new VBox();
 
         ScrollPane scrollPane = new ScrollPane();
         //scrollPane.setPrefSize(400,300);
 
-        for(int i=0;i<numOfRooms;i++) {
+        for (int i = 0; i < numOfRooms; i++) {
             String tempStr;
             int tempInt;
 
@@ -107,7 +106,7 @@ public class CityLodgeApp extends Application {
             Text numOfBed = new Text();
             Text price = new Text();
             Button rent = new Button("Room Detail");
-            final Room room =controller.getHotel().getRoom(i);
+            final Room room = controller.getHotel().getRoom(i);
             rent.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -116,42 +115,42 @@ public class CityLodgeApp extends Application {
                 }
             });
 
-            tempStr = "images/"+controller.getDatabase().imageName(controller.getHotel().getRoom(i).getRoomId());
+            tempStr = "images/" + controller.getDatabase().imageName(controller.getHotel().getRoom(i).getRoomId());
             File file = new File(tempStr);
             Image image = new Image(file.toURI().toString());
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
 
-            tempStr="Room:"+controller.getHotel().getRoom(i).getRoomId();
+            tempStr = "Room:" + controller.getHotel().getRoom(i).getRoomId();
             title.setText(tempStr);
 
-            tempStr="Room Feature:\n"+controller.getHotel().getRoom(i).getFeature();
+            tempStr = "Room Feature:\n" + controller.getHotel().getRoom(i).getFeature();
             feature.setText(tempStr);
 
             tempInt = controller.getHotel().getRoom(i).getNumOfBed();
-            tempStr = "Bedrooms:"+Integer.toString(tempInt);
+            tempStr = "Bedrooms:" + Integer.toString(tempInt);
             numOfBed.setText(tempStr);
 
             tempInt = controller.getHotel().getRoom(i).getPrice(controller.getHotel().getRoom(i).getNumOfBed());
-            tempStr = "Price:"+Integer.toString(tempInt);
+            tempStr = "Price:" + Integer.toString(tempInt);
             price.setText(tempStr);
 
             AnchorPane anchorPane = new AnchorPane();
-            anchorPane.setPrefSize(390,110);
-            anchorPane.getChildren().addAll(imageView,title,feature,numOfBed,price,rent);
-            AnchorPane.setTopAnchor(imageView,5.0);
-            AnchorPane.setLeftAnchor(imageView,5.0);
-            AnchorPane.setTopAnchor(title,20.0);
-            AnchorPane.setLeftAnchor(title,125.0);
-            AnchorPane.setTopAnchor(feature,50.0);
-            AnchorPane.setLeftAnchor(feature,125.0);
-            AnchorPane.setTopAnchor(numOfBed,20.0);
-            AnchorPane.setRightAnchor(numOfBed,82.0);
-            AnchorPane.setTopAnchor(price,50.0);
-            AnchorPane.setRightAnchor(price,100.0);
-            AnchorPane.setTopAnchor(rent,80.0);
-            AnchorPane.setRightAnchor(rent,50.0);
+            anchorPane.setPrefSize(390, 110);
+            anchorPane.getChildren().addAll(imageView, title, feature, numOfBed, price, rent);
+            AnchorPane.setTopAnchor(imageView, 5.0);
+            AnchorPane.setLeftAnchor(imageView, 5.0);
+            AnchorPane.setTopAnchor(title, 20.0);
+            AnchorPane.setLeftAnchor(title, 125.0);
+            AnchorPane.setTopAnchor(feature, 50.0);
+            AnchorPane.setLeftAnchor(feature, 125.0);
+            AnchorPane.setTopAnchor(numOfBed, 20.0);
+            AnchorPane.setRightAnchor(numOfBed, 82.0);
+            AnchorPane.setTopAnchor(price, 50.0);
+            AnchorPane.setRightAnchor(price, 100.0);
+            AnchorPane.setTopAnchor(rent, 80.0);
+            AnchorPane.setRightAnchor(rent, 50.0);
 
             vBox.getChildren().add(anchorPane);
         }
@@ -162,9 +161,9 @@ public class CityLodgeApp extends Application {
         anchor.getChildren().add(menubar);
         anchor.getChildren().add(scrollPane);
 
-        AnchorPane.setTopAnchor(scrollPane,50.0);
-        AnchorPane.setLeftAnchor(scrollPane,100.0);
-        Scene scene=new Scene(anchor);
+        AnchorPane.setTopAnchor(scrollPane, 50.0);
+        AnchorPane.setLeftAnchor(scrollPane, 100.0);
+        Scene scene = new Scene(anchor);
 
         scrollPane.prefHeightProperty().bind(primaryStage.heightProperty().subtract(100));
         scrollPane.prefWidthProperty().bind(primaryStage.widthProperty().subtract(200));

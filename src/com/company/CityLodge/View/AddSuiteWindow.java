@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.function.UnaryOperator;
-import com.company.CityLodge.Model.*;
+
 public class AddSuiteWindow {
     private final Stage stage = new Stage();
     private String feature;
@@ -22,15 +22,13 @@ public class AddSuiteWindow {
     private int month;
     private int day;
 
-    public AddSuiteWindow()
-    {
+    public AddSuiteWindow() {
         Label lable1 = new Label("Room ID(It should be 3 digits)");
         TextField textArea1 = new TextField("111");
         textArea1.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
             @Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getControlNewText().matches("[0-9]{0,3}"))
-                {
+                if (change.getControlNewText().matches("[0-9]{0,3}")) {
                     return change;
                 }
                 return null;
@@ -45,8 +43,7 @@ public class AddSuiteWindow {
         textArea3.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
             @Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
-                if(change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}"))
-                {
+                if (change.getControlNewText().matches("[0-9]{0,4}[-]?[0-9]{0,2}[-]?[0-9]{0,2}")) {
                     return change;
                 }
                 return null;
@@ -54,7 +51,7 @@ public class AddSuiteWindow {
         }));
 
         Button submit = new Button("Submit");
-        AddSuiteHandler addSuiteHandler = new AddSuiteHandler(textArea1,textArea2,textArea3);
+        AddSuiteHandler addSuiteHandler = new AddSuiteHandler(textArea1, textArea2, textArea3);
         submit.setOnAction(addSuiteHandler);
 
         Button mainPage = new Button(" Back ");
@@ -70,14 +67,14 @@ public class AddSuiteWindow {
         });
 
         GridPane grid = new GridPane();
-        grid.add(lable1,0,0);
-        grid.add(textArea1,2,0);
-        grid.add(lable2,0,1);
-        grid.add(textArea2,2,1);
-        grid.add(lable3,0,2);
-        grid.add(textArea3,2,2);
-        grid.add(submit,1,3);
-        grid.add(mainPage,1,5);
+        grid.add(lable1, 0, 0);
+        grid.add(textArea1, 2, 0);
+        grid.add(lable2, 0, 1);
+        grid.add(textArea2, 2, 1);
+        grid.add(lable3, 0, 2);
+        grid.add(textArea3, 2, 2);
+        grid.add(submit, 1, 3);
+        grid.add(mainPage, 1, 5);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);

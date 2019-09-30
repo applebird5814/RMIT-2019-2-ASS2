@@ -1,7 +1,6 @@
 package com.company.CityLodge.Controller;
 
 import com.company.CityLodge.Model.DateTime;
-import com.company.CityLodge.Model.StandardRoom;
 import com.company.CityLodge.Model.Suite;
 import com.company.CityLodge.View.CityLodgeApp;
 import javafx.event.ActionEvent;
@@ -27,10 +26,10 @@ public class AddSuiteHandler implements EventHandler<ActionEvent> {
             Controller controller = CityLodgeApp.getController();
             Boolean checkLength = (textField1.getText().length() == 3) && (textField3.getText().length() == 10);
             if (checkLength) {
-                String roomId= "S_"+textField1.getText();
+                String roomId = "S_" + textField1.getText();
                 String feature = textField2.getText();
                 DateTime temp = Controller.strToDate(textField3);
-                Suite suite = new Suite(roomId,feature,temp);
+                Suite suite = new Suite(roomId, feature, temp);
                 controller.getDatabase().saveRoom(suite);
                 controller.getHotel().addRoom(suite);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

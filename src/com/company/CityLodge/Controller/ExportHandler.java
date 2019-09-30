@@ -12,15 +12,16 @@ import java.io.OutputStreamWriter;
 
 public class ExportHandler implements EventHandler<ActionEvent> {
     private Stage stage;
+
     public ExportHandler(Stage stage) {
-        this.stage=stage;
+        this.stage = stage;
     }
 
     @Override
     public void handle(ActionEvent event) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Choose a txt file");
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text","*.txt"));
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text", "*.txt"));
         fc.setInitialFileName("CityLodgeData");
         File file = fc.showSaveDialog(stage);
         try {
@@ -32,21 +33,17 @@ public class ExportHandler implements EventHandler<ActionEvent> {
             outputStreamWriter.close();
             fileOutputStream.close();
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String formatString()
-    {
+    public String formatString() {
         String s = "";
         Controller controller = CityLodgeApp.getController();
-        for(int i=0;i<controller.getHotel().getNumOfRooms();i++)
-        {
-            s=s+controller.getHotel().getRoom(i).toString()+"\n";
-            s=s+controller.getHotel().getRoom(i).exportRecord();
+        for (int i = 0; i < controller.getHotel().getNumOfRooms(); i++) {
+            s = s + controller.getHotel().getRoom(i).toString() + "\n";
+            s = s + controller.getHotel().getRoom(i).exportRecord();
         }
         return s;
     }

@@ -10,16 +10,13 @@ public class StandardRoom extends Room {
     }
 
     public String toString() {
-        String s = super.toString()+ ":"  +super.getFeature();
+        String s = super.toString() + ":" + super.getFeature();
         JavaDatabase javaDatabase = new JavaDatabase();
         String name = javaDatabase.imageName(super.getRoomId());
-        if(name.equals("No_image.png"))
-        {
+        if (name.equals("No_image.png")) {
             return s;
-        }
-        else
-        {
-            s=s+":"+name;
+        } else {
+            s = s + ":" + name;
         }
         return s;
     }

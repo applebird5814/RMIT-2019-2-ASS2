@@ -1,13 +1,14 @@
 package com.company.CityLodge.Model;
 
-import com.company.CityLodge.JavaDatabase;
 import com.company.CityLodge.Model.Excepetion.RentDayNotCorrectExcepetion;
 import com.company.CityLodge.Model.Excepetion.ReturnDayNotCorrectExcepetion;
 
-import java.util.ArrayList;
 import java.io.Serializable;
-public abstract class Room implements Serializable{
+import java.util.ArrayList;
 
+public abstract class Room implements Serializable, Cloneable {
+
+    private static long serialVersionUID = 20190926L;
     private String roomId;
     private String feature;
     private int states;
@@ -19,42 +20,6 @@ public abstract class Room implements Serializable{
     private String roomType;
     private DateTime nextMaintenanceDate;
     private DateTime maintenanceDate;
-    private static long serialVersionUID = 20190926L;
-
-    public String exportRecord()
-    {
-        String s = "";
-        if(tempRecord.getRecordStage()!=0)
-        {
-            s=s+tempRecord.toString()+"\n";
-        }
-        for(int i = numOfRecord-1;i>=0;i--)
-        {
-            s=s+allRecord.get(i).toString()+"\n";
-        }
-        return s;
-    }
-
-    public int getPrice(int numOfBed)
-    {
-        if(numOfBed==1)
-        {
-            return 59;
-        }
-        if(numOfBed==2)
-        {
-            return 99;
-        }
-        if(numOfBed==4)
-        {
-            return 199;
-        }
-        if(numOfBed==6)
-        {
-            return 999;
-        }
-        return 0;
-    }
 
     public Room(String inputroomID, String inputfeature, String inputroomType, int numOfBed) {
         roomId = inputroomID;
@@ -63,6 +28,47 @@ public abstract class Room implements Serializable{
         allRecord = new ArrayList<HiringRecord>();
         roomType = inputroomType;
         this.numOfBed = numOfBed;
+        setTempRecord();
+    }
+
+    public void checkMaintain()
+    {
+        if(states==-1)
+        {
+            tempRecord.setStates("Maintenance");
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public String exportRecord() {
+        String s = "";
+        if (tempRecord.getRecordStage() != 0) {
+            s = s + tempRecord.toString() + "\n";
+        }
+        for (int i = numOfRecord - 1; i >= 0; i--) {
+            s = s + allRecord.get(i).toString() + "\n";
+        }
+        return s;
+    }
+
+    public int getPrice(int numOfBed) {
+        if (numOfBed == 1) {
+            return 59;
+        }
+        if (numOfBed == 2) {
+            return 99;
+        }
+        if (numOfBed == 4) {
+            return 199;
+        }
+        if (numOfBed == 6) {
+            return 999;
+        }
+        return 0;
     }
 
     public void setTempRecord() {
@@ -75,25 +81,22 @@ public abstract class Room implements Serializable{
         String basicDetail = "Room ID: \t\t\t" + roomId + "\n" + "Number of bedrooms:\t" + numOfBed + "\n" + "Type:\t\t\t\t"
                 + roomType + "\n" + "Feature summary:\t" + feature + "\n";
         int i;
-        for( i=0;i<list.size()-1;i++)
-        {
+        for (i = 0; i < list.size(); i++) {
             try {
                 HiringRecord temp = (HiringRecord) list.get(i).clone();
                 temp.setBasicDetail(basicDetail);
-                addRecord(temp);
-            }catch (Exception e)
-            {
+                if(list.get(i).getRecordStage()==1)
+                {
+                    temp.setStates("Rented");
+                    tempRecord=temp;
+                }
+                else
+                {
+                    addRecord(temp);
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
-        }
-        try {
-            HiringRecord temp = (HiringRecord) list.get(i).clone();
-            temp.setBasicDetail(basicDetail);
-            tempRecord=temp;
-        }catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 
@@ -119,7 +122,7 @@ public abstract class Room implements Serializable{
         return roomId;
     }
 
-    public void rent(String customerId, DateTime inputrentDate, int numOfRentDay){
+    public void rent(String customerId, DateTime inputrentDate, int numOfRentDay) {
         Boolean daysCheck = true;
         if (roomType.equals("Standard")) {
             if (inputrentDate.getNameOfDay().equals("Saturday") || inputrentDate.getNameOfDay().equals("Sunday")) {
@@ -147,11 +150,9 @@ public abstract class Room implements Serializable{
     }
 
     public void returnRoom(DateTime returnDate) {
-        if((returnDate.getTime()-tempRecord.getRentDate().getTime())<=0)
-        {
+        if ((returnDate.getTime() - tempRecord.getRentDate().getTime()) <= 0) {
             throw new ReturnDayNotCorrectExcepetion("Return day is eariler than rent day!");
-        }
-        else{
+        } else {
             tempRecord.setAclRentDate(returnDate);
             double dailyPrice = 0;
             double latePrice = 0;
@@ -189,18 +190,16 @@ public abstract class Room implements Serializable{
         }
     }
 
-    public void performMaintenance()
-    {
+    public void performMaintenance() {
         tempRecord.setStates("Maintenance");
-        states=-1;
+        states = -1;
     }
 
-    public void completeMaintenance(DateTime completionDate)
-    {
+    public void completeMaintenance(DateTime completionDate) {
         tempRecord.setStates("Available");
-        states=1;
-        maintenanceDate=completionDate;
-        nextMaintenanceDate=new DateTime(maintenanceDate,10);
+        states = 1;
+        maintenanceDate = completionDate;
+        nextMaintenanceDate = new DateTime(maintenanceDate, 10);
     }
 
 
@@ -224,7 +223,6 @@ public abstract class Room implements Serializable{
         for (i = numOfRecord - 1; i >= 0; i--) {
             fullRecord = fullRecord + "--------------------------------------\n" + allRecord.get(i).getDetail();
         }
-
         return fullRecord;
     }
 
@@ -240,30 +238,31 @@ public abstract class Room implements Serializable{
         return roomType;
     }
 
-    public void setMaintenanceDate(DateTime maintenanceDate) {
-        this.maintenanceDate = maintenanceDate;
-    }
-
     @Override
     public String toString() {
         String state = null;
-        if(states==1)
-        {
-            state="Available";
+        if (states == 1) {
+            state = "Available";
         }
-        if(states==0)
-        {
-            state="Rented";
+        if (states == 0) {
+            state = "Rented";
         }
-        if(states==-1)
-        {
-            state="Maintenance";
+        if (states == -1) {
+            state = "Maintenance";
         }
-        String s = roomId + ":"  +numOfBed + ":"  +roomType+ ":"  +state;
+        String s = roomId + ":" + numOfBed + ":" + roomType + ":" + state;
         return s;
     }
 
     public DateTime getMaintenanceDate() {
         return maintenanceDate;
+    }
+
+    public void setMaintenanceDate(DateTime maintenanceDate) {
+        this.maintenanceDate = maintenanceDate;
+    }
+
+    public void setStates(int states) {
+        this.states = states;
     }
 }
